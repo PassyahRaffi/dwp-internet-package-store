@@ -5,6 +5,7 @@ import {
   Button,
   IconButton,
   Paper,
+  Snackbar,
   Table,
   TableBody,
   TableCell,
@@ -23,33 +24,45 @@ import { useCustomers } from '../hooks/useCustomers';
 import { formatDateShort } from '../utils/format';
 import type { Customer, CustomerInput } from '../types/customer';
 
+type SnackbarState = { open: boolean; message: string; severity: 'success' | 'error' };
+
+const SNACKBAR_CLOSED: SnackbarState = { open: false, message: '', severity: 'success' };
+
 const CustomersPage = () => {
   const { customers, loading, error, addCustomer, editCustomer, removeCustomer } = useCustomers();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editTarget, setEditTarget] = useState<Customer | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Customer | null>(null);
-  const [actionError, setActionError] = useState<string | null>(null);
+  const [snackbar, setSnackbar] = useState<SnackbarState>(SNACKBAR_CLOSED);
+
+  const showSnackbar = (message: string, severity: 'success' | 'error') =>
+    setSnackbar({ open: true, message, severity });
 
   const handleOpenAdd = () => { setEditTarget(null); setDialogOpen(true); };
   const handleOpenEdit = (c: Customer) => { setEditTarget(c); setDialogOpen(true); };
 
   const handleSubmit = async (data: CustomerInput) => {
-    setActionError(null);
     try {
-      if (editTarget) await editCustomer(editTarget.id, data);
-      else await addCustomer(data);
+      if (editTarget) {
+        await editCustomer(editTarget.id, data);
+        showSnackbar('Customer berhasil diperbarui.', 'success');
+      } else {
+        await addCustomer(data);
+        showSnackbar('Customer baru berhasil ditambahkan.', 'success');
+      }
     } catch {
-      setActionError('Gagal menyimpan data customer.');
+      showSnackbar('Gagal menyimpan data customer.', 'error');
     }
   };
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
-    setActionError(null);
+    const name = deleteTarget.name;
     try {
       await removeCustomer(deleteTarget.id);
+      showSnackbar(`Customer "${name}" berhasil dihapus.`, 'success');
     } catch {
-      setActionError('Gagal menghapus customer.');
+      showSnackbar('Gagal menghapus customer.', 'error');
     } finally {
       setDeleteTarget(null);
     }
@@ -67,9 +80,7 @@ const CustomersPage = () => {
         }
       />
 
-      {(error || actionError) && (
-        <Alert severity="error" sx={{ mb: 2 }}>{actionError || error}</Alert>
-      )}
+      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
       {loading ? (
         <LoadingState />
@@ -126,6 +137,17 @@ const CustomersPage = () => {
         onConfirm={handleDelete}
         onClose={() => setDeleteTarget(null)}
       />
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar(SNACKBAR_CLOSED)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

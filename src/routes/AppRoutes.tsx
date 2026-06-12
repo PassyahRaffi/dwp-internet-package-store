@@ -5,6 +5,7 @@ import DashboardPage from '../pages/DashboardPage';
 import PackagesPage from '../pages/PackagesPage';
 import TransactionsPage from '../pages/TransactionsPage';
 import CustomersPage from '../pages/CustomersPage';
+import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from './ProtectedRoute';
 
 const AppRoutes = () => {
@@ -51,6 +52,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };
