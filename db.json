@@ -1,0 +1,170 @@
+{
+  "customers": [
+    {
+      "id": "1",
+      "name": "Passyah Ramadhan",
+      "email": "passyah@example.com",
+      "password": "123456",
+      "phone": "081234567890",
+      "address": "Jl. Merdeka No. 10, Jakarta",
+      "joinDate": "2024-01-15"
+    },
+    {
+      "id": "2",
+      "name": "Siti Nurhaliza",
+      "email": "siti@example.com",
+      "password": "123456",
+      "phone": "081298765432",
+      "address": "Jl. Sudirman No. 25, Bandung",
+      "joinDate": "2024-03-22"
+    },
+    {
+      "id": "3",
+      "name": "Budi Santoso",
+      "email": "budi@example.com",
+      "password": "123456",
+      "phone": "081345678901",
+      "address": "Jl. Gajah Mada No. 5, Surabaya",
+      "joinDate": "2024-05-10"
+    }
+  ],
+  "packages": [
+    {
+      "id": "1",
+      "name": "Super Harian",
+      "provider": "Telkomsel",
+      "quota": "1 GB",
+      "validity": "1 Hari",
+      "price": 5000,
+      "description": "Paket internet harian, cocok untuk kebutuhan browsing dan chatting ringan.",
+      "category": "Harian"
+    },
+    {
+      "id": "2",
+      "name": "Combo Mingguan",
+      "provider": "XL Axiata",
+      "quota": "8 GB",
+      "validity": "7 Hari",
+      "price": 25000,
+      "description": "Kuota besar untuk seminggu, cocok untuk streaming dan media sosial.",
+      "category": "Mingguan"
+    },
+    {
+      "id": "3",
+      "name": "Freedom Internet",
+      "provider": "Indosat Ooredoo",
+      "quota": "30 GB",
+      "validity": "30 Hari",
+      "price": 75000,
+      "description": "Kuota besar bulanan dengan kecepatan stabil untuk kerja dan hiburan.",
+      "category": "Bulanan"
+    },
+    {
+      "id": "4",
+      "name": "Volt Booster",
+      "provider": "Smartfren",
+      "quota": "15 GB",
+      "validity": "30 Hari",
+      "price": 60000,
+      "description": "Internet cepat dengan harga terjangkau untuk pemakaian sehari-hari.",
+      "category": "Bulanan"
+    },
+    {
+      "id": "5",
+      "name": "AXISpro Mega",
+      "provider": "Axis",
+      "quota": "20 GB",
+      "validity": "30 Hari",
+      "price": 65000,
+      "description": "Kuota utama dan malam terpisah, hemat untuk pengguna aktif malam hari.",
+      "category": "Bulanan"
+    },
+    {
+      "id": "6",
+      "name": "AlwaysOn Lite",
+      "provider": "Tri (3)",
+      "quota": "3 GB",
+      "validity": "3 Hari",
+      "price": 12000,
+      "description": "Paket singkat untuk kebutuhan internet jangka pendek dengan harga murah.",
+      "category": "Mingguan"
+    },
+    {
+      "id": "7",
+      "name": "MAXstream Bundling",
+      "provider": "Telkomsel",
+      "quota": "50 GB",
+      "validity": "30 Hari",
+      "price": 110000,
+      "description": "Kuota besar plus akses streaming video unlimited dari mitra MAXstream.",
+      "category": "Bulanan"
+    },
+    {
+      "id": "8",
+      "name": "XL Hotrod",
+      "provider": "XL Axiata",
+      "quota": "5 GB",
+      "validity": "5 Hari",
+      "price": 20000,
+      "description": "Kuota cepat habis dalam waktu singkat, pas untuk traveling.",
+      "category": "Mingguan"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "1",
+      "customerId": "1",
+      "packageId": "3",
+      "packageName": "Freedom Internet",
+      "provider": "Indosat Ooredoo",
+      "quota": "30 GB",
+      "price": 75000,
+      "status": "success",
+      "date": "2026-05-20T08:30:00.000Z"
+    },
+    {
+      "id": "2",
+      "customerId": "1",
+      "packageId": "1",
+      "packageName": "Super Harian",
+      "provider": "Telkomsel",
+      "quota": "1 GB",
+      "price": 5000,
+      "status": "success",
+      "date": "2026-05-25T14:10:00.000Z"
+    },
+    {
+      "id": "3",
+      "customerId": "1",
+      "packageId": "7",
+      "packageName": "MAXstream Bundling",
+      "provider": "Telkomsel",
+      "quota": "50 GB",
+      "price": 110000,
+      "status": "pending",
+      "date": "2026-06-08T10:00:00.000Z"
+    },
+    {
+      "id": "4",
+      "customerId": "1",
+      "packageId": "2",
+      "packageName": "Combo Mingguan",
+      "provider": "XL Axiata",
+      "quota": "8 GB",
+      "price": 25000,
+      "status": "failed",
+      "date": "2026-06-09T19:45:00.000Z"
+    },
+    {
+      "id": "5",
+      "customerId": "2",
+      "packageId": "5",
+      "packageName": "AXISpro Mega",
+      "provider": "Axis",
+      "quota": "20 GB",
+      "price": 65000,
+      "status": "success",
+      "date": "2026-06-01T09:00:00.000Z"
+    }
+  ]
+}
