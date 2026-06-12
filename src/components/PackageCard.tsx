@@ -10,17 +10,13 @@ import {
 } from '@mui/material';
 import WifiIcon from '@mui/icons-material/Wifi';
 import type { Package } from '../types/package';
+import { formatPrice } from '../utils/format';
 
 interface PackageCardProps {
   pkg: Package;
   onBuy: (pkg: Package) => void;
   buying?: boolean;
 }
-
-const formatPrice = (price: number) =>
-  new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(
-    price,
-  );
 
 const PackageCard = ({ pkg, onBuy, buying }: PackageCardProps) => {
   return (

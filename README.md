@@ -2,18 +2,25 @@
 
 Prototype frontend e-commerce untuk pembelian paket data internet, dibuat sebagai pengerjaan technical test Frontend Developer.
 
+## Live Demo
+
+- **Frontend (Vercel)**: https://dwp-internet-package-store.vercel.app
+- **Mock API (Render)**: https://dwp-internet-package-store.onrender.com
+
+> ⚠️ Mock API menggunakan Render free tier — mungkin perlu **30–50 detik** untuk wake up jika sedang tidak aktif.
+
 ## Deskripsi Singkat
 
-Aplikasi ini menyediakan dashboard pelanggan untuk login, melihat ringkasan akun, membeli paket internet, melihat riwayat transaksi, serta halaman manajemen data customer (CRUD). Backend disimulasikan menggunakan `json-server` sebagai mock REST API.
+Aplikasi ini menyediakan dashboard pelanggan untuk login, melihat ringkasan akun, membeli paket internet, melihat riwayat transaksi, serta halaman manajemen data customer (CRUD). Backend disimulasikan menggunakan `json-server` yang di-deploy di Render sebagai mock REST API.
 
 ## Tech Stack
 
 - React 19 + Vite
 - TypeScript
-- Material UI (MUI) v9
+- Material UI (MUI) v6
 - React Router DOM v7
 - Axios
-- json-server (mock API)
+- json-server 0.17 (mock API, deployed di Render)
 
 ## Fitur
 
@@ -29,7 +36,7 @@ Aplikasi ini menyediakan dashboard pelanggan untuk login, melihat ringkasan akun
 npm install
 ```
 
-## Cara Menjalankan Mock API
+## Cara Menjalankan Mock API (lokal)
 
 Mock API berjalan di `http://localhost:3001` menggunakan data dari `db.json`.
 
@@ -37,7 +44,7 @@ Mock API berjalan di `http://localhost:3001` menggunakan data dari `db.json`.
 npm run mock
 ```
 
-## Cara Menjalankan Frontend
+## Cara Menjalankan Frontend (lokal)
 
 Jalankan di terminal terpisah (pastikan mock API sudah berjalan):
 
@@ -54,12 +61,12 @@ Email    : passyah@example.com
 Password : 123456
 ```
 
-Akun lain yang tersedia di `db.json`: `siti@example.com` dan `budi@example.com`, keduanya dengan password `123456`.
+Akun lain yang tersedia: `siti@example.com` dan `budi@example.com`, keduanya dengan password `123456`.
 
 ## Waktu Pengerjaan
 
-- **Mulai**: 11 Juni 2026, 21:48 WIT
-- **Selesai**: 11 Juni 2026, 22:35 WIT
+- **Mulai**: 11 Juni 2026, 21:48 WIB
+- **Selesai**: 12 Juni 2026, 23:10 WIB
 
 ## Catatan & Asumsi
 
@@ -68,3 +75,4 @@ Akun lain yang tersedia di `db.json`: `siti@example.com` dan `budi@example.com`,
 - "Total Pengeluaran" pada dashboard hanya menjumlahkan transaksi dengan status `success`.
 - Halaman Customers menampilkan seluruh data customer (bukan hanya yang sedang login) untuk mendemonstrasikan fitur CRUD secara penuh sesuai permintaan soal.
 - Data paket, customer, dan transaksi pada `db.json` adalah data dummy yang dibuat untuk keperluan demonstrasi.
+- Mock API di-deploy ke Render (free tier) menggunakan `json-server` agar prototype dapat diakses secara publik tanpa biaya tambahan.

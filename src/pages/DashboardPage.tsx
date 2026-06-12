@@ -1,53 +1,26 @@
 import { useMemo } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
-  Box,
-  Grid,
-  Paper,
-  Typography,
-  Avatar,
-  Stack,
-  CircularProgress,
   Alert,
+  Box,
   Button,
   Divider,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
 } from '@mui/material';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import PaidIcon from '@mui/icons-material/Paid';
+import SummaryCard from '../components/SummaryCard';
+import LoadingState from '../components/LoadingState';
 import PackageCard from '../components/PackageCard';
 import { useAuth } from '../hooks/useAuth';
 import { useTransactions } from '../hooks/useTransactions';
 import { usePackages } from '../hooks/usePackages';
-
-const formatPrice = (price: number) =>
-  new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(
-    price,
-  );
-
-interface SummaryCardProps {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-  color: string;
-}
-
-const SummaryCard = ({ icon, label, value, color }: SummaryCardProps) => (
-  <Paper variant="outlined" sx={{ p: 2.5, borderRadius: 3, height: '100%' }}>
-    <Stack direction="row" spacing={2} alignItems="center">
-      <Avatar sx={{ bgcolor: color, width: 48, height: 48 }}>{icon}</Avatar>
-      <Box>
-        <Typography variant="body2" color="text.secondary">
-          {label}
-        </Typography>
-        <Typography variant="h6" fontWeight={700}>
-          {value}
-        </Typography>
-      </Box>
-    </Stack>
-  </Paper>
-);
+import { formatPrice, formatDateLong } from '../utils/format';
 
 const DashboardPage = () => {
   const { customer } = useAuth();
@@ -69,24 +42,30 @@ const DashboardPage = () => {
 
   return (
     <Box>
+      {/* Welcome banner */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2.5, sm: 3 },
           mb: 3,
           borderRadius: 3,
           color: 'primary.contrastText',
           background: 'linear-gradient(135deg, #1976d2 0%, #1565c0 100%)',
         }}
       >
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems={{ sm: 'center' }} justifyContent="space-between">
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }}
+          spacing={2}
+          alignItems={{ sm: 'center' }}
+          justifyContent="space-between"
+        >
           <Box>
-            <Typography variant="h5" fontWeight={700}>
+            <Typography variant="h6" fontWeight={700}>
               Selamat datang, {customer?.name}!
             </Typography>
-            <Typography variant="body2" sx={{ opacity: 0.85 }}>
-              {customer?.email} · Bergabung sejak{' '}
-              {customer?.joinDate ? new Date(customer.joinDate).toLocaleDateString('id-ID', { dateStyle: 'long' }) : '-'}
+            <Typography variant="body2" sx={{ opacity: 0.85, mt: 0.5 }}>
+              {customer?.email}
+              {customer?.joinDate && ` · Bergabung sejak ${formatDateLong(customer.joinDate)}`}
             </Typography>
           </Box>
           <Button
@@ -94,38 +73,35 @@ const DashboardPage = () => {
             to="/packages"
             variant="contained"
             color="inherit"
-            sx={{ color: 'primary.main', whiteSpace: 'nowrap' }}
+            sx={{ color: 'primary.main', whiteSpace: 'nowrap', alignSelf: { xs: 'flex-start', sm: 'center' } }}
           >
             Beli Paket Baru
           </Button>
         </Stack>
       </Paper>
 
+      {/* Stats */}
       {trxError && <Alert severity="error" sx={{ mb: 2 }}>{trxError}</Alert>}
-
       {trxLoading ? (
-        <Box display="flex" justifyContent="center" py={4}>
-          <CircularProgress />
-        </Box>
+        <LoadingState py={4} />
       ) : (
         <Grid container spacing={2} mb={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <SummaryCard icon={<ReceiptLongIcon />} label="Total Transaksi" value={String(stats.total)} color="primary.main" />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <SummaryCard icon={<CheckCircleIcon />} label="Transaksi Berhasil" value={String(stats.success)} color="success.main" />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <SummaryCard icon={<HourglassEmptyIcon />} label="Transaksi Pending" value={String(stats.pending)} color="warning.main" />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <SummaryCard icon={<PaidIcon />} label="Total Pengeluaran" value={formatPrice(stats.totalSpending)} color="info.main" />
-          </Grid>
+          {[
+            { icon: <ReceiptLongIcon />, label: 'Total Transaksi', value: String(stats.total), color: 'primary.main' },
+            { icon: <CheckCircleIcon />, label: 'Transaksi Berhasil', value: String(stats.success), color: 'success.main' },
+            { icon: <HourglassEmptyIcon />, label: 'Transaksi Pending', value: String(stats.pending), color: 'warning.main' },
+            { icon: <PaidIcon />, label: 'Total Pengeluaran', value: formatPrice(stats.totalSpending), color: 'info.main' },
+          ].map((card) => (
+            <Grid item key={card.label} xs={12} sm={6} md={3}>
+              <SummaryCard {...card} />
+            </Grid>
+          ))}
         </Grid>
       )}
 
       <Divider sx={{ mb: 3 }} />
 
+      {/* Recommended packages */}
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
         <Typography variant="h6" fontWeight={700}>
           Rekomendasi Paket Untukmu
@@ -136,11 +112,8 @@ const DashboardPage = () => {
       </Stack>
 
       {pkgError && <Alert severity="error" sx={{ mb: 2 }}>{pkgError}</Alert>}
-
       {pkgLoading ? (
-        <Box display="flex" justifyContent="center" py={4}>
-          <CircularProgress />
-        </Box>
+        <LoadingState py={4} />
       ) : (
         <Grid container spacing={2}>
           {recommendedPackages.map((pkg) => (
