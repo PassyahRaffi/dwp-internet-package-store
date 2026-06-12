@@ -68,4 +68,3 @@ Akun lain yang tersedia di `db.json`: `siti@example.com` dan `budi@example.com`,
 - "Total Pengeluaran" pada dashboard hanya menjumlahkan transaksi dengan status `success`.
 - Halaman Customers menampilkan seluruh data customer (bukan hanya yang sedang login) untuk mendemonstrasikan fitur CRUD secara penuh sesuai permintaan soal.
 - Data paket, customer, dan transaksi pada `db.json` adalah data dummy yang dibuat untuk keperluan demonstrasi.
-
